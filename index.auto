@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveEase - نظام حجز ذكي تفاعلي</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome للأيقونات -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0ea5e9',
+                        dark: '#0f172a'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght=400;700;800&display=swap');
+        body { font-family: 'Tajawal', sans-serif; }
+        
+        /* تصميم الإطارات التوضيحية (Annotations) للزبون */
+        .annotation-box {
+            position: absolute;
+            background-color: #fef08a; /* أصفر خفيف */
+            color: #854d0e;
+            border: 2px dashed #eab308;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            white-space: nowrap;
+            z-index: 40;
+            pointer-events: none; /* كي لا تعيق الضغط على الأزرار */
+            animation: bounce-slight 2s infinite ease-in-out;
+        }
+
+        @keyframes bounce-slight {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Top Banner للمطور -->
+    <div class="bg-dark text-white text-sm text-center py-2 px-4 shadow-md relative z-50">
+        <span class="animate-pulse inline-block mr-2 text-yellow-400"><i class="fas fa-lightbulb"></i></span>
+        هل تحتاج موقعاً احترافياً لشركتك مثل هذا؟ 
+        <a href="https://wa.me/212716300993" target="_blank" class="text-primary font-bold underline ml-2 hover:text-white transition">تواصل معي الآن</a>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-sm py-4 px-4 md:px-8 flex justify-between items-center relative z-40">
+        
+        <!-- قسم الشعار والاسم مع الإطارات التوضيحية -->
+        <div class="flex items-center gap-3 relative">
+            <!-- اللوجو -->
+            <div class="relative">
+                <i class="fas fa-car-side text-primary text-3xl"></i>
+                <div class="annotation-box -bottom-10 -right-4">
+                    <i class="fas fa-level-up-alt ml-1"></i> هنا يمكن يجي اللوكو ديالك
+                </div>
+            </div>
+            
+            <!-- اسم الشركة -->
+            <div class="relative text-2xl font-extrabold text-dark hidden sm:block">
+                Drive<span class="text-primary">Ease</span>
+                <div class="annotation-box -bottom-10 right-0">
+                    <i class="fas fa-level-up-alt ml-1"></i> هنا يجي الاسم د شركة ديالك
+                </div>
+            </div>
+        </div>
+
+        <div class="hidden md:flex gap-6 font-semibold items-center">
+            <a href="#" class="hover:text-primary transition">الرئيسية</a>
+            <a href="#fleet" class="hover:text-primary transition">سياراتنا</a>
+            <a href="#" class="hover:text-primary transition">شروط الكراء</a>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <!-- خاصية تغيير اللغة -->
+            <div class="flex items-center gap-1 text-sm border border-gray-200 rounded-md px-2 py-1 bg-gray-50 cursor-pointer hover:bg-gray-100 transition">
+                <i class="fas fa-globe text-primary"></i>
+                <select class="bg-transparent outline-none cursor-pointer font-semibold text-gray-600">
+                    <option value="ar">العربية</option>
+                    <option value="fr">Français</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+
+            <!-- زر الاتصال مع إطار توضيحي للون -->
+            <div class="relative hidden sm:block">
+                <a href="https://wa.me/212716300993" target="_blank" class="bg-primary hover:bg-blue-600 text-white px-5 py-2 rounded-lg font-bold shadow-lg transition flex items-center gap-2">
+                    اتصل بنا <i class="fab fa-whatsapp"></i>
+                </a>
+                <div class="annotation-box -bottom-10 left-0">
+                    <i class="fas fa-level-up-alt ml-1"></i> هاد اللون اختياري ليك
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-dark text-white text-center py-24 px-4 relative overflow-hidden mt-8 md:mt-0">
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-primary opacity-20 rounded-full blur-3xl"></div>
+        
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-4 relative z-10">طريقك، اختيارك، وراحتك تبدأ من هنا</h1>
+        <p class="text-gray-300 text-lg mb-8 relative z-10">اكتشف أسطولنا المتنوع واستأجر سيارتك بكل سهولة وبأفضل الأسعار فالمغرب.</p>
+        
+        <div class="relative inline-block z-10">
+            <a href="#fleet" class="bg-primary hover:bg-blue-600 text-white font-bold py-3 px-10 rounded-xl shadow-xl transition transform hover:scale-105 inline-block">
+                تصفح السيارات المتاحة للحجز <i class="fas fa-arrow-down mr-2"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Fleet Section -->
+    <section id="fleet" class="py-16 px-8 max-w-7xl mx-auto">
+        <h2 class="text-3xl font-bold text-center text-dark mb-8">اختر سيارتك المفضلة</h2>
+        
+        <!-- أزرار الفلترة الجديدة -->
+        <div class="flex flex-wrap justify-center gap-3 mb-10 relative">
+            <div class="annotation-box -top-8 text-xs">
+                <i class="fas fa-arrow-down ml-1"></i> فلترة ذكية لتسهيل البحث على الزبون
+            </div>
+            <button class="filter-btn active bg-primary text-white px-5 py-2 rounded-full font-bold shadow-md transition" data-filter="all">الكل</button>
+            <button class="filter-btn bg-white text-dark border border-gray-200 hover:border-primary hover:text-primary px-5 py-2 rounded-full font-bold transition shadow-sm" data-filter="economy">اقتصادية</button>
+            <button class="filter-btn bg-white text-dark border border-gray-200 hover:border-primary hover:text-primary px-5 py-2 rounded-full font-bold transition shadow-sm" data-filter="suv">عائلية / رياضية</button>
+            <button class="filter-btn bg-white text-dark border border-gray-200 hover:border-primary hover:text-primary px-5 py-2 rounded-full font-bold transition shadow-sm" data-filter="luxury">فخمة</button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="carsGrid">
+            
+            <!-- السيارة 1: اقتصادية -->
+            <div class="car-card bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition duration-300 group" data-category="economy">
+                <div class="h-48 bg-slate-100 m-4 rounded-xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center text-slate-400 group-hover:border-primary group-hover:text-primary transition cursor-pointer">
+                    <i class="fas fa-image text-3xl mb-2"></i>
+                    <p class="text-sm font-bold text-center px-4">صورة خاصة بالسيارة<br><span class="text-xs font-normal">هنا نضع صورة دات جودة عالية</span></p>
+                </div>
+                <div class="p-5 text-right">
+                    <h3 class="text-xl font-bold text-dark mb-2">داسيا لوغان (Dacia Logan)</h3>
+                    <div class="flex justify-between text-sm text-gray-500 mb-4 border-b border-gray-100 pb-4">
+                        <span><i class="fas fa-gas-pump text-primary mr-1"></i> ديزل</span>
+                        <span><i class="fas fa-cogs text-primary mr-1"></i> مانيوال</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="text-2xl font-extrabold text-dark">250 <span class="text-sm text-gray-500 font-normal">درهم/يوم</span></div>
+                        <button onclick="openBookingModal('داسيا لوغان (Dacia Logan)', 250)" class="bg-primary hover:bg-blue-600 text-white px-5 py-2 rounded-lg font-semibold transition shadow-md">
+                            احجز الآن
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- السيارة 2: عائلية / رياضية -->
+            <div class="car-card bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition duration-300 group" data-category="suv">
+                <div class="h-48 bg-slate-100 m-4 rounded-xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center text-slate-400 group-hover:border-primary group-hover:text-primary transition cursor-pointer">
+                    <i class="fas fa-image text-3xl mb-2"></i>
+                    <p class="text-sm font-bold text-center px-4">صورة خاصة بالسيارة<br><span class="text-xs font-normal">هنا نضع صورة دات جودة عالية</span></p>
+                </div>
+                <div class="p-5 text-right">
+                    <h3 class="text-xl font-bold text-dark mb-2">كيا سبورتيدج (Kia Sportage)</h3>
+                    <div class="flex justify-between text-sm text-gray-500 mb-4 border-b border-gray-100 pb-4">
+                        <span><i class="fas fa-gas-pump text-primary mr-1"></i> ديزل</span>
+                        <span><i class="fas fa-cogs text-primary mr-1"></i> أوتوماتيك</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="text-2xl font-extrabold text-dark">500 <span class="text-sm text-gray-500 font-normal">درهم/يوم</span></div>
+                        <button onclick="openBookingModal('كيا سبورتيدج (Kia Sportage)', 500)" class="bg-primary hover:bg-blue-600 text-white px-5 py-2 rounded-lg font-semibold transition shadow-md">
+                            احجز الآن
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- السيارة 3: فخمة -->
+            <div class="car-card bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition duration-300 group" data-category="luxury">
+                <div class="h-48 bg-slate-100 m-4 rounded-xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center text-slate-400 group-hover:border-primary group-hover:text-primary transition cursor-pointer">
+                    <i class="fas fa-image text-3xl mb-2"></i>
+                    <p class="text-sm font-bold text-center px-4">صورة خاصة بالسيارة<br><span class="text-xs font-normal">هنا نضع صورة دات جودة عالية</span></p>
+                </div>
+                <div class="p-5 text-right">
+                    <h3 class="text-xl font-bold text-dark mb-2">رونج روفر (Range Rover)</h3>
+                    <div class="flex justify-between text-sm text-gray-500 mb-4 border-b border-gray-100 pb-4">
+                        <span><i class="fas fa-gas-pump text-primary mr-1"></i> هجين</span>
+                        <span><i class="fas fa-cogs text-primary mr-1"></i> أوتوماتيك</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="text-2xl font-extrabold text-dark">1200 <span class="text-sm text-gray-500 font-normal">درهم/يوم</span></div>
+                        <button onclick="openBookingModal('رونج روفر (Range Rover)', 1200)" class="bg-primary hover:bg-blue-600 text-white px-5 py-2 rounded-lg font-semibold transition shadow-md">
+                            احجز الآن
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- MODAL: النافذة الذكية التي تظهر بعد الضغط على الحجز -->
+    <div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl relative mx-4 text-right max-h-[90vh] overflow-y-auto">
+            
+            <button onclick="closeBookingModal()" class="absolute top-4 left-4 text-gray-400 hover:text-gray-600 text-xl">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <h3 class="text-2xl font-bold text-dark mb-2 flex items-center gap-2">
+                <i class="fas fa-calendar-check text-primary"></i> تفاصيل وتأكيد الحجز
+            </h3>
+            <p class="text-sm text-gray-500 mb-4">يرجى تحديد التواريخ ومعلومات الاستلام لحساب السعر الإجمالي.</p>
+            
+            <div class="bg-slate-100 text-dark text-sm p-3 rounded-lg mb-4 flex justify-between items-center font-bold">
+                <span>🚗 السيارة: <span id="modalCarName" class="text-primary"></span></span>
+                <span>💰 السعر اليومي: <span id="modalCarPrice"></span> درهم</span>
+            </div>
+
+            <form id="whatsappForm" onsubmit="sendToWhatsApp(event)">
+                <div class="mb-4">
+                    <label class="block text-sm font-bold text-gray-700 mb-1">مكان الاستلام</label>
+                    <div class="relative">
+                        <i class="fas fa-map-marker-alt absolute top-3 right-3 text-gray-400"></i>
+                        <input type="text" id="pickup_location" required placeholder="مثال: مطار محمد الخامس أو وسط المدينة" class="w-full bg-gray-50 border border-gray-200 rounded-lg py-2 pr-10 pl-4 outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">من تاريخ</label>
+                        <input type="date" id="start_date" required onchange="calculateTotal()" class="w-full bg-gray-50 border border-gray-200 rounded-lg py-2 px-3 outline-none focus:ring-2 focus:ring-primary text-gray-600">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">إلى تاريخ</label>
+                        <input type="date" id="end_date" required onchange="calculateTotal()" class="w-full bg-gray-50 border border-gray-200 rounded-lg py-2 px-3 outline-none focus:ring-2 focus:ring-primary text-gray-600">
+                    </div>
+                </div>
+
+                <div id="calculationResult" class="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-4 hidden text-center">
+                    <div class="text-gray-700 font-medium mb-1">
+                        مدة الكراء الإجمالية: <span id="totalDays" class="font-extrabold text-blue-600 text-lg">0</span> أيام
+                    </div>
+                    <div class="text-xl font-black text-dark">
+                        السعر الإجمالي المتوقع: <span id="totalPrice" class="text-emerald-500 text-2xl">0</span> درهم المغربي
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-100 pt-4 mb-4">
+                    <div class="mb-3">
+                        <label class="block text-sm font-bold text-gray-700 mb-1">اسمك الكامل</label>
+                        <input type="text" id="client_name" required placeholder="مثال: أحمد العمراني" class="w-full bg-gray-50 border border-gray-200 rounded-lg py-2 px-3 outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">رقم الهاتف للاتصال</label>
+                        <input type="tel" id="client_phone" required placeholder="06XXXXXXXX" class="w-full bg-gray-50 border border-gray-200 rounded-lg py-2 px-3 outline-none focus:ring-2 focus:ring-primary text-left" dir="ltr">
+                    </div>
+                </div>
+                
+                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded-lg shadow-lg transition flex items-center justify-center gap-2 text-lg relative">
+                    تأكيد الطلب وإرسال عبر الواتساب <i class="fab fa-whatsapp text-xl"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-gray-400 py-8 text-center mt-10">
+        <p class="mb-2">© 2026 DriveEase - نموذج تجريبي تفاعلي متكامل لبيع الخدمات.</p>
+        <p class="text-sm">
+            تم التطوير والبرمجة بكل ❤️ بواسطة 
+            <a href="https://wa.me/212716300993" target="_blank" class="text-primary font-bold hover:text-white transition">Noaman | مطور واجهات الويب</a>
+        </p>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        let selectedCar = '';
+        let carPricePerDay = 0;
+
+        /* ========== نظام الفلترة الذكي ========== */
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const carCards = document.querySelectorAll('.car-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // إزالة التفعيل من كل الأزرار
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-primary', 'text-white', 'shadow-md');
+                    b.classList.add('bg-white', 'text-dark', 'border-gray-200', 'shadow-sm');
+                });
+                // تفعيل الزر المضغوط
+                btn.classList.add('bg-primary', 'text-white', 'shadow-md');
+                btn.classList.remove('bg-white', 'text-dark', 'border-gray-200', 'shadow-sm');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                // إظهار وإخفاء السيارات بناء على الفلتر
+                carCards.forEach(card => {
+                    if(filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                        card.style.display = 'block';
+                        // حركة بسيطة عند الإظهار
+                        card.animate([
+                            { opacity: 0, transform: 'scale(0.95)' },
+                            { opacity: 1, transform: 'scale(1)' }
+                        ], { duration: 300, fill: 'forwards' });
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        /* ========== نظام الحجز والنافذة ========== */
+        function openBookingModal(carName, price) {
+            selectedCar = carName;
+            carPricePerDay = price;
+            
+            document.getElementById('modalCarName').innerText = carName;
+            document.getElementById('modalCarPrice').innerText = price;
+            
+            document.getElementById('whatsappForm').reset();
+            document.getElementById('calculationResult').classList.add('hidden');
+            
+            const modal = document.getElementById('bookingModal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+            }, 10);
+        }
+
+        function closeBookingModal() {
+            const modal = document.getElementById('bookingModal');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function calculateTotal() {
+            const startDateVal = document.getElementById('start_date').value;
+            const endDateVal = document.getElementById('end_date').value;
+            const calcResultDiv = document.getElementById('calculationResult');
+            
+            if (startDateVal && endDateVal) {
+                const start = new Date(startDateVal);
+                const end = new Date(endDateVal);
+                
+                const diffTime = end - start;
+                let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                if (diffDays <= 0) {
+                    diffDays = 1;
+                }
+                
+                const totalCost = diffDays * carPricePerDay;
+                
+                document.getElementById('totalDays').innerText = diffDays;
+                document.getElementById('totalPrice').innerText = totalCost;
+                calcResultDiv.classList.remove('hidden');
+            } else {
+                calcResultDiv.classList.add('hidden');
+            }
+        }
+
+        function sendToWhatsApp(event) {
+            event.preventDefault(); 
+            
+            const location = document.getElementById('pickup_location').value;
+            const startDate = document.getElementById('start_date').value;
+            const endDate = document.getElementById('end_date').value;
+            const clientName = document.getElementById('client_name').value;
+            const clientPhone = document.getElementById('client_phone').value;
+            
+            const days = document.getElementById('totalDays').innerText || 1;
+            const totalPrice = document.getElementById('totalPrice').innerText || carPricePerDay;
+
+            const message = `🌟 *طلب حجز سيارة جديد* 🌟%0A%0A` +
+                            `👤 *معلومات الزبون:*%0A` +
+                            `• الاسم: ${clientName}%0A` +
+                            `• الهاتف: ${clientPhone}%0A%0A` +
+                            `🚗 *تفاصيل السيارة:*%0A` +
+                            `• النوع: ${selectedCar}%0A` +
+                            `• مكان الاستلام: ${location}%0A%0A` +
+                            `📅 *مدة الحجز:*%0A` +
+                            `• من: ${startDate}%0A` +
+                            `• إلى: ${endDate}%0A` +
+                            `• الإجمالي: ${days} أيام%0A%0A` +
+                            `💰 *السعر الإجمالي المقدر:* ${totalPrice} درهم مغربي`;
+
+            const whatsappUrl = `https://wa.me/212716300993?text=${message}`;
+            
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
